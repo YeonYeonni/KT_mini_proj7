@@ -23,7 +23,7 @@ class AiModelAdmin(admin.ModelAdmin):
             .values("name", "prediction_count", "answer_count")
             .annotate(x = F("name"))
             .annotate(y = Cast(Cast(F("answer_count"), FloatField()) / F("prediction_count") * 100, IntegerField() ) )
-            .values("x", "y")
+            .values("x", "y", "prediction_count")
             .order_by("name")
         )
 

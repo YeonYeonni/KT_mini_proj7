@@ -12,19 +12,27 @@
     // Sample data
     const chartData = {{ chart_data | safe }};
 
+    console.log(chartData.map((d) => d["prediction_count"]))
 
     // Render the chart
     const chart = new Chart(ctx, {
       type: "bar",
       data: {
+        labels: chartData.map((d) => d['x']),
         datasets: [
           {
             label: "model accuracy",
-            data: chartData,
+            data: chartData.map((d) => d['y']),
             backgroundColor: "rgba(220,20,20,0.5)",
           },
+          {
+            type: "line",
+            label: "model prediction count",
+            data: chartData.map((d) => d['prediction_count']),
+            fill: false,
+            borderColor: 'rgb(54, 162, 235)'
+          },
         ],
-        labels: chartData.map((d) => d['x']),
       },
       options: {
         responsive: true,
@@ -34,11 +42,6 @@
               beginAtZero: true,
             }
           }],
-          {% comment %} xAxes:  [{
-            ticks: {
-              fontColor: this.tickColor
-            },
-          }], {% endcomment %}
         },
       },
     });
