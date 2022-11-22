@@ -11,8 +11,8 @@ class Result(models.Model):
 class AiModel(models.Model):
     file = models.FileField()
     name = models.CharField(max_length=30)
-    input_count = models.IntegerField(default=0)
-    correct_count = models.IntegerField(default=0)
+    prediction_count = models.IntegerField(default=0)
+    answer_count = models.IntegerField(default=0)
     is_using = models.BooleanField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
