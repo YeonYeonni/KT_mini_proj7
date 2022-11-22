@@ -12,13 +12,6 @@
     // Sample data
     const chartData = {{ chart_data | safe }};
 
-    // Parse the dates to JS
-    {% comment %} chartData.forEach((d) => {
-      d.x = d['x']
-      d.y = d['y']
-    }); {% endcomment %}
-
-    console.log(chartData)
 
     // Render the chart
     const chart = new Chart(ctx, {
@@ -31,27 +24,32 @@
             backgroundColor: "rgba(220,20,20,0.5)",
           },
         ],
+        labels: chartData.map((d) => d['x']),
       },
       options: {
-        {% comment %} responsive: true, {% endcomment %}
-        parsing: {
-          xAxisKey: 'x',
-          yAxisKey: 'y'
+        responsive: true,
+        scales: {
+          yAxes:  [{
+            ticks: {
+              beginAtZero: true,
+            }
+          }],
+          {% comment %} xAxes:  [{
+            ticks: {
+              fontColor: this.tickColor
+            },
+          }], {% endcomment %}
         },
-        {% comment %} scales: {
-          y:  {
-            beginAtZero: true,
-          },
-        }, {% endcomment %}
       },
     });
   });
 </script>
+
 {% endblock %} {% block content %}
 <!-- Render our chart -->
 <div style="width: 80%">
   <canvas
-    style="margin-bottom: 30px; width: 60%; height: 50%"
+    style="margin-bottom: 30px; width: 60%; height: 30%"
     id="myChart"
   ></canvas>
 </div>

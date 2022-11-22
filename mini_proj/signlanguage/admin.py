@@ -24,7 +24,7 @@ class AiModelAdmin(admin.ModelAdmin):
             .annotate(x = F("name"))
             .annotate(y = Cast(Cast(F("answer_count"), FloatField()) / F("prediction_count") * 100, IntegerField() ) )
             .values("x", "y")
-            .order_by("-name")
+            .order_by("name")
         )
 
         print(list(chart_data))
