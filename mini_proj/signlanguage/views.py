@@ -32,6 +32,7 @@ def upload(request):
             files_list_type.append(files)
             # 정답을 '이미지 파일 이름' 으로 함
             # 이미지 파일의 확장자를 제외 => name 변수에 담음
+            print(os.path.splitext(str(f)))
             name, _ = os.path.splitext(str(f))
             # upload 화면에 출력할 이미지 파일 이름 담기
             files_list_name.append(name) # ['a', 'e', 'l', 'o', 'v']
@@ -45,14 +46,6 @@ def upload(request):
         model_path = settings.MODEL_DIR +'/sign_model.h5'
         model = load_model(model_path)
 
-        # print("==================")
-        # print(files)
-        # print(type(files))
-        # print("==================")
-        # print(files_list[0])
-        # print(type(files_list[0]))
-    
-    
         for file in files_list_type:
             # history 저장을 위해 객체에 담아서 DB에 저장한다.
             # 이때 파일시스템에 저장도 된다.
@@ -60,10 +53,12 @@ def upload(request):
             result.answer = request.POST.get('answer', '')
             result.image = file
             result.pub_date = timezone.datetime.now()
+            result.image_arr.append(result.image)
             result.save()
 
+        for i in result.image_arr:
             # 흑백으로 읽기
-            img = cv2.imread(result.image.path, cv2.IMREAD_GRAYSCALE)
+            img = cv2.imread(i.path, cv2.IMREAD_GRAYSCALE)
             # 크기 조정
             img = cv2.resize(img, (28, 28))
             # input shape 맞추기
@@ -73,16 +68,22 @@ def upload(request):
             # 예측 : 결국 이 결과를 얻기 위해 모든 것을 했다.
             pred = model.predict(test_sign)
             pred_1 = pred.argmax(axis=1)
-            preds.append(class_names[pred_1][0])
+
+            # a e l o v
+            result.ans_arr.append(class_names[pred_1][0])
+            #preds.append(class_names[pred_1][0])
 
             result.result = class_names[pred_1][0]
             result.save()
 
-            context = {
-                'result': result, # a e l o v
-            }
+        dic = {}
+        for x in range(0, len(result.image_arr)):
+            dic[result.image_arr[x]] = result.ans_arr[x]
 
-        print(context)
+        context = {
+            'result': result,
+            'dic': dic.items()
+        }
 
     # http method의 GET은 처리하지 않는다. 사이트 테스트용으로 남겨둠
     else:
