@@ -1,11 +1,11 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'language/style.css' %}">
+
+    {% for key, value in dic %}
     <div>
-        <img src="{{ result.image.url }}" width="500" height="500">
+      <img src="{{ key.url }}" width="500" height="500">
     </div>
     <div>
-      예측 결과 : {{ result.result }}
+      예측 결과 : {{ value }}
     </div>
-    <div>
-      정답  : {{ result.answer }}
-    </div>
+    {% endfor %}

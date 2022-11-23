@@ -7,15 +7,11 @@ class Result(models.Model):
     answer = models.CharField(max_length=10)
     result = models.CharField(max_length=10)
     pub_date = models.DateTimeField('date published')
+    image_arr = []
+    ans_arr = []
 
-class AiModel(models.Model):
-    file = models.FileField()
-    name = models.CharField(max_length=30)
-    input_count = models.IntegerField(default=0)
-    correct_count = models.IntegerField(default=0)
-    is_using = models.BooleanField(default=0)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
+#class AiModel(models.Model):
+#    ai_file = models.FieldFile(blank=True)
+#    version = models.CharField(max_length=100)
+#    is_selected = models.BooleanField(max_length=10)
+#    pub_date = models.DateTimeField('date published')
