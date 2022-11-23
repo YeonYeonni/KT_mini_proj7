@@ -157,4 +157,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MODEL_DIR = os.path.join(BASE_DIR, 'signlanguage/model')
+MODEL_DIR = os.path.join(MEDIA_ROOT, 'signlanguage/model')
