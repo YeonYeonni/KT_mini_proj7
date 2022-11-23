@@ -1,11 +1,37 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'language/style.css' %}">
+{% extends 'layout.html' %} {% block content %}
+<div class="container">
+  <div class="d-flex flex-wrap justify-content-start">
+    {% for result in results %}
+    <div class="bg-image hover-zoom hover-shadow ripple">
+      <img src="{{ result.image.url }}" width="500" height="500" />
+      <div>
+        <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)">
+          <div class="d-flex justify-content-center align-items-center h-100">
+            <p class="text-white display-1 fw-bold">{{ result.result }}</p>
+          </div>
+        </div>
 
-    {% for key, value in dic %}
-    <div>
-      <img src="{{ key.url }}" width="500" height="500">
-    </div>
-    <div>
-      예측 결과 : {{ value }}
+        <div class="hover-overlay">
+          <div
+            class="mask"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgba(29, 236, 197, 0.8),
+                rgba(91, 14, 214, 0.8) 100%
+              );
+            "
+          >
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <p class="text-white display-1 fw-bold">
+                answer : {{ result.answer }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     {% endfor %}
+  </div>
+</div>
+{% endblock %}
