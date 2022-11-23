@@ -66,6 +66,16 @@ def upload(request):
             result.save()
             results.append(result)
 
+            aimodel = AiModel.objects.get(is_using=True)
+            if name == class_names[pred_1][0] :
+                aimodel.prediction_count += 1
+                aimodel.answer_count += 1
+            else :
+                aimodel.prediction_count += 1
+            
+            aimodel.save()
+
+
         print(results)
 
         context = {
