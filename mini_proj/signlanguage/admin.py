@@ -5,10 +5,11 @@ from django.db.models.functions import TruncDay, Cast
 from django.core.serializers.json import DjangoJSONEncoder
 
 # Register your models here.
-from .models import Result, AiModel
+from .models import Result# ,AiModel
 
 # 관리에서 Result 객체에 대해  기본 CRUD 관리를 한다. 
 admin.site.register(Result)
+<<<<<<< HEAD
 
 @admin.register(AiModel)
 class AiModelAdmin(admin.ModelAdmin):
@@ -34,3 +35,6 @@ class AiModelAdmin(admin.ModelAdmin):
 
         # Call the superclass changelist_view to render the page
         return super().changelist_view(request, extra_context=extra_context)
+=======
+#admin.site.register(AiModel)
+>>>>>>> c9bf3411f4d6275950c3dbe3a02154790e65af7e
