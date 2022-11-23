@@ -11,28 +11,27 @@
 
     // Sample data
     const chartData = {{ chart_data | safe }};
+    const linedata = {{line_data | safe}};
 
-    console.log(chartData.map((d) => d["prediction_count"]))
 
     // Render the chart
     const chart = new Chart(ctx, {
       type: "bar",
       data: {
         labels: chartData.map((d) => d['x']),
-        datasets: [
-          {
+        datasets: [{
             label: "model accuracy",
-            data: chartData.map((d) => d['y']),
+            data: chartData,
             backgroundColor: "rgba(220,20,20,0.5)",
-          },
-          {
-            type: "line",
-            label: "model prediction count",
-            data: chartData.map((d) => d['prediction_count']),
-            fill: false,
-            borderColor: 'rgb(54, 162, 235)'
-          },
-        ],
+          },{
+            label: 'model usage',
+            type: 'line',
+            data: linedata,
+            fill:false,
+            borderColor: 'rgb(204, 223, 153)',
+            lineTension : 0.2,
+            pointRadius : 0,
+          }],
       },
       options: {
         responsive: true,
@@ -42,6 +41,11 @@
               beginAtZero: true,
             }
           }],
+          {% comment %} xAxes:  [{
+            ticks: {
+              fontColor: this.tickColor
+            },
+          }], {% endcomment %}
         },
       },
     });
@@ -50,11 +54,15 @@
 
 {% endblock %} {% block content %}
 <!-- Render our chart -->
+
+<h2>모델별 성능</h2>
 <div style="width: 80%">
   <canvas
     style="margin-bottom: 30px; width: 60%; height: 30%"
     id="myChart"
   ></canvas>
 </div>
+
+<h2>모델 상세관리</h2>
 <!-- Render the rest of the ChangeList view -->
 {{ block.super }} {% endblock %}

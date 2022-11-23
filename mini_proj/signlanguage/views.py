@@ -9,7 +9,7 @@ import string
 from keras.models import load_model
 
 # from pybo.model import Result
-from .models import Result
+from .models import AiModel, Result
 
 # Create your views here.
 
@@ -43,7 +43,9 @@ def upload(request):
         class_names = np.array(class_names)
 
         # 모델 로딩
-        model_path = settings.MODEL_DIR +'/sign_model.h5'
+        # print(AiModel.objects.filter(is_using=True))
+        model_path = AiModel.objects.filter(is_using=True)[0].file.path
+        # print(model_path)
         model = load_model(model_path)
 
         for file in files_list_type:
