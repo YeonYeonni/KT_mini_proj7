@@ -43,9 +43,7 @@ def upload(request):
         class_names = np.array(class_names)
 
         # 모델 로딩
-        # print(AiModel.objects.filter(is_using=True))
-        model_path = AiModel.objects.filter(is_using=True)[0].file.path
-        # print(model_path)
+        model_path = AiModel.objects.get(is_using=True).file.path
         model = load_model(model_path)
 
         for file in files_list_type:

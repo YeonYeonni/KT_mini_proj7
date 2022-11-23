@@ -7,6 +7,8 @@ class Result(models.Model):
     answer = models.CharField(max_length=10)
     result = models.CharField(max_length=10)
     pub_date = models.DateTimeField('date published')
+    image_arr = []
+    ans_arr = []
 
 class AiModel(models.Model):
     file = models.FileField()
