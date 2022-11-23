@@ -7,6 +7,7 @@ import numpy as np
 import cv2
 import string
 from keras.models import load_model
+import os
 
 # from pybo.model import Result
 from .models import AiModel, Result
@@ -19,7 +20,6 @@ def index(request):
     return render(request, 'language/index.html')
 
 def upload(request):
-    import os
 
     if request.method == 'POST' and request.FILES['files']:
         files_list = [] # fils
