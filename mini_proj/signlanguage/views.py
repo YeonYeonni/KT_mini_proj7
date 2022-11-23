@@ -47,10 +47,12 @@ def upload(request):
             result.answer = name
             result.image = file
             result.pub_date = timezone.datetime.now()
+            result.save()
 
             # 흑백으로 읽기
             img = cv2.imread(result.image.path, cv2.IMREAD_GRAYSCALE)
             # 크기 조정
+            
             img = cv2.resize(img, (28, 28))
             # input shape 맞추기
             test_sign = img.reshape(1, 28, 28, 1)
