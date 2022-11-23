@@ -20,7 +20,7 @@ def index(request):
 
 def upload(request):
     import os
-
+    
     if request.method == 'POST' and request.FILES['files']:
         files_list = [] # fils
         results = []
@@ -38,12 +38,13 @@ def upload(request):
         model_path = AiModel.objects.get(is_using=True).file.path
         model = load_model(model_path)
 
+        idx = 0
         for file in files_list:
             result = Result()
             # history 저장을 위해 객체에 담아서 DB에 저장한다.
             # 이때 파일시스템에 저장도 된다.
-            name, _ = os.path.splitext(str(file))      
-            print('name ' + name)
+            name, _ = os.path.splitext(str(file))
+            print('name ' + name)    
             result.answer = name
             result.image = file
             result.pub_date = timezone.datetime.now()
@@ -63,7 +64,17 @@ def upload(request):
             result.result = class_names[pred_1][0]
             result.save()
             results.append(result)
-
+            
+            aimodel = AiModel.objects.get(is_using=True)
+            if name == class_names[pred_1][0] :
+                aimodel.prediction_count += 1
+                aimodel.answer_count += 1
+            else :
+                aimodel.prediction_count += 1
+            idx +=1
+            
+            aimodel.save()
+            
         print(results)
 
         context = {

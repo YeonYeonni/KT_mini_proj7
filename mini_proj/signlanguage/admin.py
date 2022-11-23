@@ -31,7 +31,7 @@ class AiModelAdmin(admin.ModelAdmin):
             AiModel.objects
             .values("name",'prediction_count')
             .annotate(x=F("name"))
-            .annotate(y=(Cast(F("answer_count"), IntegerField())))
+            .annotate(y=(Cast(F("prediction_count"), IntegerField())))
             .values("x","y")
             .order_by("name")
         )
