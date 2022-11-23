@@ -3,7 +3,12 @@
   <div class="d-flex flex-wrap justify-content-start">
     {% for result in results %}
     <div class="col-3 bg-image hover-zoom hover-shadow ripple">
-      <img src="{{ result.image.url }}" width="500" height="500" />
+      <img
+        class="col-12"
+        src="{{ result.image.url }}"
+        height="400"
+        class="object-cover object-center"
+      />
       <div>
         <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)">
           <div class="d-flex justify-content-center align-items-center h-100">
