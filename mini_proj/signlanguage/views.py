@@ -65,12 +65,23 @@ def upload(request):
             result.result = class_names[pred_1][0]
             result.save()
             results.append(result)
+            
+            aimodel = AiModel.objects.get(is_using=True)
+            if name == class_names[pred_1][0] :
+                aimodel.prediction_count += 1
+                aimodel.answer_count += 1
+            else :
+                aimodel.prediction_count += 1
+            
+            aimodel.save()
 
         print(results)
 
         context = {
             'results': results,
         }
+
+
 
     # http method의 GET은 처리하지 않는다. 사이트 테스트용으로 남겨둠
     else:
